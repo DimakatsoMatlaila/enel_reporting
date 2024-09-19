@@ -10,7 +10,7 @@ SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', 'public', false);
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
@@ -148,7 +148,7 @@ CREATE TABLE public.documents (
     status character varying(10),
     email character varying(255),
     document character varying(255),
-    CONSTRAINT documents_status_check CHECK (((status)::text = ANY ((ARRAY['pending'::character varying, 'approved'::character varying, 'rejected'::character varying])::text[])))
+    CONSTRAINT documents_status_check CHECK (((status)::text = ANY (ARRAY[('pending'::character varying)::text, ('approved'::character varying)::text, ('rejected'::character varying)::text])))
 );
 
 
@@ -233,7 +233,7 @@ CREATE TABLE public.projects (
     description character varying(255),
     start_date date,
     end_date date,
-    project_status project_status_type DEFAULT 'active'::project_status_type
+    project_status public.project_status_type DEFAULT 'active'::public.project_status_type
 );
 
 
@@ -340,35 +340,35 @@ ALTER SEQUENCE public.timesheets_id_seq OWNED BY public.timesheets.id;
 -- Name: contractor id; Type: DEFAULT; Schema: public; Owner: eneldb_owner
 --
 
-ALTER TABLE ONLY public.contractor ALTER COLUMN id SET DEFAULT nextval('contractor_id_seq'::regclass);
+ALTER TABLE ONLY public.contractor ALTER COLUMN id SET DEFAULT nextval('public.contractor_id_seq'::regclass);
 
 
 --
 -- Name: documents id; Type: DEFAULT; Schema: public; Owner: eneldb_owner
 --
 
-ALTER TABLE ONLY public.documents ALTER COLUMN id SET DEFAULT nextval('documents_id_seq'::regclass);
+ALTER TABLE ONLY public.documents ALTER COLUMN id SET DEFAULT nextval('public.documents_id_seq'::regclass);
 
 
 --
 -- Name: employee id; Type: DEFAULT; Schema: public; Owner: eneldb_owner
 --
 
-ALTER TABLE ONLY public.employee ALTER COLUMN id SET DEFAULT nextval('employee_id_seq'::regclass);
+ALTER TABLE ONLY public.employee ALTER COLUMN id SET DEFAULT nextval('public.employee_id_seq'::regclass);
 
 
 --
 -- Name: projects id; Type: DEFAULT; Schema: public; Owner: eneldb_owner
 --
 
-ALTER TABLE ONLY public.projects ALTER COLUMN id SET DEFAULT nextval('projects_id_seq'::regclass);
+ALTER TABLE ONLY public.projects ALTER COLUMN id SET DEFAULT nextval('public.projects_id_seq'::regclass);
 
 
 --
 -- Name: timesheets id; Type: DEFAULT; Schema: public; Owner: eneldb_owner
 --
 
-ALTER TABLE ONLY public.timesheets ALTER COLUMN id SET DEFAULT nextval('timesheets_id_seq'::regclass);
+ALTER TABLE ONLY public.timesheets ALTER COLUMN id SET DEFAULT nextval('public.timesheets_id_seq'::regclass);
 
 
 --
@@ -455,7 +455,7 @@ ALTER TABLE ONLY public.timesheets
 -- Name: supervisor supervisor_id_trigger; Type: TRIGGER; Schema: public; Owner: eneldb_owner
 --
 
-CREATE TRIGGER supervisor_id_trigger BEFORE INSERT ON public.supervisor FOR EACH ROW EXECUTE FUNCTION set_supervisor_id();
+CREATE TRIGGER supervisor_id_trigger BEFORE INSERT ON public.supervisor FOR EACH ROW EXECUTE FUNCTION public.set_supervisor_id();
 
 
 --
@@ -463,7 +463,7 @@ CREATE TRIGGER supervisor_id_trigger BEFORE INSERT ON public.supervisor FOR EACH
 --
 
 ALTER TABLE ONLY public.contractor_projects
-    ADD CONSTRAINT contractor_projects_contractor_id_fkey FOREIGN KEY (contractor_id) REFERENCES contractor(id);
+    ADD CONSTRAINT contractor_projects_contractor_id_fkey FOREIGN KEY (contractor_id) REFERENCES public.contractor(id);
 
 
 --
@@ -471,7 +471,7 @@ ALTER TABLE ONLY public.contractor_projects
 --
 
 ALTER TABLE ONLY public.contractor_projects
-    ADD CONSTRAINT contractor_projects_project_id_fkey FOREIGN KEY (project_id) REFERENCES projects(id);
+    ADD CONSTRAINT contractor_projects_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id);
 
 
 --
@@ -479,7 +479,7 @@ ALTER TABLE ONLY public.contractor_projects
 --
 
 ALTER TABLE ONLY public.employee
-    ADD CONSTRAINT employee_contractor_id_fkey FOREIGN KEY (contractor_id) REFERENCES contractor(id);
+    ADD CONSTRAINT employee_contractor_id_fkey FOREIGN KEY (contractor_id) REFERENCES public.contractor(id);
 
 
 --
@@ -487,7 +487,7 @@ ALTER TABLE ONLY public.employee
 --
 
 ALTER TABLE ONLY public.supervisor
-    ADD CONSTRAINT fk_employee FOREIGN KEY (employee_id) REFERENCES employee(id);
+    ADD CONSTRAINT fk_employee FOREIGN KEY (employee_id) REFERENCES public.employee(id);
 
 
 --
@@ -495,7 +495,7 @@ ALTER TABLE ONLY public.supervisor
 --
 
 ALTER TABLE ONLY public.employee
-    ADD CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects(id);
+    ADD CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES public.projects(id);
 
 
 --
@@ -503,7 +503,7 @@ ALTER TABLE ONLY public.employee
 --
 
 ALTER TABLE ONLY public.supervisor
-    ADD CONSTRAINT supervisor_project_id_fkey FOREIGN KEY (project_id) REFERENCES projects(id);
+    ADD CONSTRAINT supervisor_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id);
 
 
 --
@@ -511,7 +511,7 @@ ALTER TABLE ONLY public.supervisor
 --
 
 ALTER TABLE ONLY public.timesheets
-    ADD CONSTRAINT timesheets_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employee(id);
+    ADD CONSTRAINT timesheets_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employee(id);
 
 
 --
