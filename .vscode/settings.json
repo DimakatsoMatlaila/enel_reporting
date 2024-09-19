@@ -1,0 +1,20 @@
+{
+    "files.exclude": {
+        "**/*vercel*": true,
+        //"**/package.json": true,
+        "**/node_modules": true,
+        "**/coverage": true,
+
+        "**/README.md": true,
+        "**/.git*": true,
+        
+        "**/dist": true,
+        "**/pnpm*": true,
+        "**/vite*": true,
+        "**/*config*": true,
+        "**/.es*": true,
+     },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always"
+    },
+}
