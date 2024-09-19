@@ -1,11 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const MainReports: React.FC = () => {
-    useEffect(() => {
-        window.location.href = "http://8.210.71.214/public/dashboard/80808704-39c2-49e6-8806-59b0deb75fe8";
-    }, []);
-
-    return <div>Redirecting to the dashboard...</div>;
+    return (
+        <div style={{ height: '100vh', width: '100%' }}>
+            <iframe
+                src="https://misdacyber.co.za/public/dashboard/0adbf0c6-9787-4f51-aceb-97ee96e5a58a"
+                title="Dashboard"
+                style={{ height: '100%', width: '100%', border: 'none' }}
+                allowFullScreen
+            ></iframe>
+        </div>
+    );
 }
 
 export default MainReports;
