@@ -1,5 +1,9 @@
 # React + TypeScript + Vite
 
+Full code for this project is private,however the ![Demo](https://enel-reporting.vercel.app), is running the complete code.
+
+##Demo Credentials
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
