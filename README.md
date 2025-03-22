@@ -3,10 +3,10 @@
 Full code for this project is private,however the ![Demo](https://enel-reporting.vercel.app), is running the complete code.
 
 ## Demo Credentials
-  *Supervisor* 
+Supervisor
      ID       : S000009
      Password : securepassword4
-  *Admin*
+ admin
      ID       : A01234
      password : admin123
      
