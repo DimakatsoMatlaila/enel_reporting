@@ -2,8 +2,14 @@
 
 Full code for this project is private,however the ![Demo](https://enel-reporting.vercel.app), is running the complete code.
 
-##Demo Credentials
-
+## Demo Credentials
+  *Supervisor* 
+     ID       : S000009
+     Password : securepassword4
+  *Admin*
+     ID       : A01234
+     password : admin123
+     
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
